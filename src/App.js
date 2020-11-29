@@ -16,6 +16,17 @@ class App extends Component {
     ],
     filter: '',
   };
+  componentDidMount() {
+    if (localStorage.getItem('contacts')) {
+      this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   addContacts = el => {
     if (this.state.contacts.find(item => item.name === el.name)) {
       alert(`${el.name} is already in contacts.`);
@@ -44,10 +55,11 @@ class App extends Component {
         ...prevState.contacts.slice(index + 1),
       ],
     }));
+    this.setState({ filter: '' }); // очистили інпут після нажаття на кнопку delete
   };
 
   filterRender = filter => {
-    this.setState({ filter }); // ?
+    this.setState({ filter }); // відповідає запису this.setState({ filter: filter })
   };
   render() {
     const { filter, contacts } = this.state;

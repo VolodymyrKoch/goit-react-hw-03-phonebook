@@ -7,7 +7,6 @@ class ContactForm extends Component {
   state = {
     ...INITIAL_STATE,
   };
-
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -15,7 +14,8 @@ class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.addContacts({ ...this.state });
-    this.setState({ name: '', number: '' }); // очищаю input після submit(відправки)
+    this.setState({ name: '', number: '' }); //1 варіант очищаю input після submit(відправки)
+    // this.setState(INITIAL_STATE);  //2 варіант очищаю input після submit(відправки)
   };
 
   render() {
